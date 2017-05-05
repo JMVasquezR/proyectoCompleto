@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es3",
+        "module": "amd",
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "rootDir": "static/src/typescript",
+        "outDir": "static/build/js"
+    },
+    "exclude": [
+        "build",
+        "node_modules"
+    ]
+}
