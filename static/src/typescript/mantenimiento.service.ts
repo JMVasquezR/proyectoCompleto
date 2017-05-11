@@ -2,7 +2,7 @@ declare var BASEURL : string;
 
 export class MantenimientoSistemaService{
     
-    private url_mantenimientoService : string = 'http://192.168.200.123:82/apirest/sistemas/';
+    private url_mantenimientoService : string = 'http://172.16.2.205:82/apirest/sistemas/';
     
     getSistemas(): JQueryXHR{
         return $.ajax({

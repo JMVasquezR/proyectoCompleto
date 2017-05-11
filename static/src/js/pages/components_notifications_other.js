@@ -1,13 +1,13 @@
 /* ------------------------------------------------------------------------------
-*
-*  # Noty and jGrowl notifications
-*
-*  Specific JS code additions for components_notifications_other.html page
-*
-*  Version: 1.0
-*  Latest update: Aug 1, 2015
-*
-* ---------------------------------------------------------------------------- */
+ *
+ *  # Noty and jGrowl notifications
+ *
+ *  Specific JS code additions for components_notifications_other.html page
+ *
+ *  Version: 1.0
+ *  Latest update: Aug 1, 2015
+ *
+ * ---------------------------------------------------------------------------- */
 
 $(function() {
 
@@ -23,11 +23,12 @@ $(function() {
     notes['success'] = 'You successfully read this important alert message.';
     notes['information'] = 'This alert needs your attention, but it\'s not super important.';
     notes['warning'] = 'Warning! Best check yo self, you\'re not looking too good.';
-    notes['confirm'] = 'Do you want to continue?';
+    notes['confirm'] = 'Esta seguro de guardar los datos?';
 
     // Initialize
-    $('.noty-runner').click(function () {
-        var self = $(this);
+
+    $('.noty-runner').click(function() {
+        let self = $(this);
         noty({
             width: 200,
             text: notes[self.data('type')],
@@ -35,11 +36,10 @@ $(function() {
             dismissQueue: true,
             timeout: 4000,
             layout: self.data('layout'),
-            buttons: (self.data('type') != 'confirm') ? false : [
-                {
+            buttons: (self.data('type') != 'confirm') ? false : [{
                     addClass: 'btn btn-primary btn-xs',
-                    text: 'Ok',
-                    onClick: function ($noty) { //this = button element, $noty = $noty element
+                    text: 'Si',
+                    onClick: function($noty) { //this = button element, $noty = $noty element
                         $noty.close();
                         noty({
                             force: true,
@@ -51,8 +51,8 @@ $(function() {
                 },
                 {
                     addClass: 'btn btn-danger btn-xs',
-                    text: 'Cancel',
-                    onClick: function ($noty) {
+                    text: 'No',
+                    onClick: function($noty) {
                         $noty.close();
                         noty({
                             force: true,
@@ -81,7 +81,7 @@ $(function() {
     //
 
     // Solid color theme
-    $('#jgrowl-default').on('click', function () {
+    $('#jgrowl-default').on('click', function() {
         $.jGrowl('We are glad to see you again', {
             header: 'Good morning!',
             theme: 'bg-primary'
@@ -89,7 +89,7 @@ $(function() {
     });
 
     // Danger notification
-    $('#jgrowl-danger').on('click', function () {
+    $('#jgrowl-danger').on('click', function() {
         $.jGrowl('Change a few things up and try submitting again', {
             header: 'Oh snap!',
             theme: 'bg-danger'
@@ -97,7 +97,7 @@ $(function() {
     });
 
     // Success notification
-    $('#jgrowl-success').on('click', function () {
+    $('#jgrowl-success').on('click', function() {
         $.jGrowl('You successfully read this important alert message', {
             header: 'Well done!',
             theme: 'bg-success'
@@ -105,7 +105,7 @@ $(function() {
     });
 
     // Warning notification
-    $('#jgrowl-warning').on('click', function () {
+    $('#jgrowl-warning').on('click', function() {
         $.jGrowl('Better check yourself, you\'re not looking too good', {
             header: 'Attention Here!',
             theme: 'bg-warning'
@@ -113,7 +113,7 @@ $(function() {
     });
 
     // Info notification
-    $('#jgrowl-info').on('click', function () {
+    $('#jgrowl-info').on('click', function() {
         $.jGrowl('This alert needs your attention, but it\'s not super important.', {
             header: 'Heads up!',
             theme: 'bg-info'
@@ -127,7 +127,7 @@ $(function() {
     //
 
     // Solid left
-    $('#jgrowl-solid-styled-left').on('click', function () {
+    $('#jgrowl-solid-styled-left').on('click', function() {
         $.jGrowl('Solid color notification with left icon', {
             header: 'Left icon',
             theme: 'alert-styled-left bg-danger'
@@ -135,7 +135,7 @@ $(function() {
     });
 
     // Solid right
-    $('#jgrowl-solid-styled-right').on('click', function () {
+    $('#jgrowl-solid-styled-right').on('click', function() {
         $.jGrowl('Solid color notification with right icon', {
             header: 'Right icon',
             theme: 'alert-styled-right bg-info'
@@ -143,7 +143,7 @@ $(function() {
     });
 
     // Solid custom
-    $('#jgrowl-solid-custom-styled').on('click', function () {
+    $('#jgrowl-solid-custom-styled').on('click', function() {
         $.jGrowl('Notification with custom colors', {
             header: 'Custom styling',
             theme: 'bg-teal alert-styled-left alert-styled-custom'
@@ -152,7 +152,7 @@ $(function() {
 
 
     // Styled left
-    $('#jgrowl-styled-left').on('click', function () {
+    $('#jgrowl-styled-left').on('click', function() {
         $.jGrowl('Notification with left contextual icon', {
             header: 'Left icon',
             theme: 'alert-bordered alert-styled-left alert-danger'
@@ -160,7 +160,7 @@ $(function() {
     });
 
     // Styled right
-    $('#jgrowl-styled-right').on('click', function () {
+    $('#jgrowl-styled-right').on('click', function() {
         $.jGrowl('Notification with right contextual icon', {
             header: 'Right icon',
             theme: 'alert-bordered alert-styled-right alert-danger'
@@ -168,7 +168,7 @@ $(function() {
     });
 
     // Custom style
-    $('#jgrowl-custom-styled').on('click', function () {
+    $('#jgrowl-custom-styled').on('click', function() {
         $.jGrowl('Notification with custom style', {
             header: 'Custom style',
             theme: 'alert-styled-left alert-styled-custom alpha-teal text-teal-900'
@@ -176,7 +176,7 @@ $(function() {
     });
 
     // Styled with arrow
-    $('#jgrowl-styled-arrow').on('click', function () {
+    $('#jgrowl-styled-arrow').on('click', function() {
         $.jGrowl('Styled alert with arrow', {
             header: 'Styled with arrow',
             theme: 'alert-styled-left alert-arrow-left alert-primary'
@@ -185,14 +185,14 @@ $(function() {
 
 
     // Rounded
-    $('#jgrowl-rounded').on('click', function () {
+    $('#jgrowl-rounded').on('click', function() {
         $.jGrowl('Alert with rounded corners', {
             theme: 'bg-primary alert-rounded'
         });
     });
 
     // Basic style
-    $('#jgrowl-alert-default').on('click', function () {
+    $('#jgrowl-alert-default').on('click', function() {
         $.jGrowl('Default alert style example', {
             header: 'Default alert style',
             theme: 'alert-bordered alert-primary'
@@ -206,7 +206,7 @@ $(function() {
     //
 
     // Sticky notification
-    $('#jgrowl-sticky').on('click', function () {
+    $('#jgrowl-sticky').on('click', function() {
         $.jGrowl('I am a sticky message', {
             header: 'Sticky message',
             sticky: true,
@@ -215,7 +215,7 @@ $(function() {
     });
 
     // Long life message
-    $('#jgrowl-long-life').on('click', function () {
+    $('#jgrowl-long-life').on('click', function() {
         $.jGrowl('A message that will live a little longer.', {
             header: 'Long life message',
             life: 10000,
@@ -224,25 +224,25 @@ $(function() {
     });
 
     // Callbacks
-    $('#jgrowl-callbacks').on('click', function () {
+    $('#jgrowl-callbacks').on('click', function() {
         $.jGrowl('Check out your console', {
             theme: 'bg-slate-600',
             life: 5000,
             header: 'Callbacks',
-            beforeOpen: function(e,m,o) {
+            beforeOpen: function(e, m, o) {
                 console.log("I am going to be opened!", this);
             },
-            afterOpen: function(e,m,o) {
+            afterOpen: function(e, m, o) {
                 console.log("I am opened!", this);
             },
-            close: function(e,m,o) {
+            close: function(e, m, o) {
                 console.log("I am closed!", this);
             }
         });
     });
 
     // Animation options
-    $('#jgrowl-animation').on('click', function () {
+    $('#jgrowl-animation').on('click', function() {
         $.jGrowl('I am a notice!', {
             speed: 100,
             theme: 'bg-danger',
@@ -257,7 +257,7 @@ $(function() {
     //
 
     // Top left
-    $('#jgrowl-top-left').on('click', function () {
+    $('#jgrowl-top-left').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'top-left',
@@ -267,7 +267,7 @@ $(function() {
     });
 
     // Top center
-    $('#jgrowl-top-center').on('click', function () {
+    $('#jgrowl-top-center').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'top-center',
@@ -277,7 +277,7 @@ $(function() {
     });
 
     // Top right
-    $('#jgrowl-top-right').on('click', function () {
+    $('#jgrowl-top-right').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'top-right',
@@ -288,7 +288,7 @@ $(function() {
 
 
     // Center
-    $('#jgrowl-center').on('click', function () {
+    $('#jgrowl-center').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'center',
@@ -299,7 +299,7 @@ $(function() {
 
 
     // Bottom left
-    $('#jgrowl-bottom-left').on('click', function () {
+    $('#jgrowl-bottom-left').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'bottom-left',
@@ -309,7 +309,7 @@ $(function() {
     });
 
     // Bottom right
-    $('#jgrowl-bottom-right').on('click', function () {
+    $('#jgrowl-bottom-right').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'bottom-right',
@@ -319,7 +319,7 @@ $(function() {
     });
 
     // Bottom center
-    $('#jgrowl-bottom-center').on('click', function () {
+    $('#jgrowl-bottom-center').on('click', function() {
         $('body').find('.jGrowl').attr('class', '').attr('id', '').hide();
         $.jGrowl('I am a jGrowl notice!', {
             position: 'bottom-center',
@@ -327,5 +327,5 @@ $(function() {
             header: 'Bottom Center position'
         });
     });
-    
+
 });

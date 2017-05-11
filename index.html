@@ -14,10 +14,12 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
         <link href="static/src/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
         <link href="static/src/css/bootstrap.css" rel="stylesheet" type="text/css">
+
         <link href="static/src/css/core.css" rel="stylesheet" type="text/css">
         <link href="static/src/css/components.css" rel="stylesheet" type="text/css">
         <link href="static/src/css/colors.css" rel="stylesheet" type="text/css">
         <link href="static/src/css/prueba.css" rel="stylesheet" type="text/css">
+        <link href="static/src/css/cssAuxiliares.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
         <!-- Core JS files -->
@@ -25,6 +27,7 @@
         <script type="text/javascript" src="static/src/js/core/libraries/jquery.min.js"></script>
         <script type="text/javascript" src="static/src/js/core/libraries/bootstrap.min.js"></script>
         <script type="text/javascript" src="static/src/js/plugins/loaders/blockui.min.js"></script>
+
         <!-- /core JS files -->
 
         <!-- Theme JS files -->
@@ -37,6 +40,10 @@
         <script type="text/javascript" src="static/src/js/plugins/pickers/daterangepicker.js"></script>
 
         <script type="text/javascript" src="static/src/js/core/app.js"></script>
+        <script type="text/javascript" src="static/src/js/plugins/notifications/pnotify.min.js"></script>
+        <script type="text/javascript" src="static/src/js/pages/components_notifications_pnotify.js"></script>
+        <script type="text/javascript" src="static/src/js/plugins/forms/validation/validate.min.js"></script>
+        <script type="text/javascript" src="static/src/js/plugins/notifications/sweet_alert.min.js"></script>
 
 
 
@@ -143,7 +150,6 @@
                                     <ul>
                                         <li><a href="#" onclick="openCity(event, 'grupo')">Listado de grupos</a></li>
                                         <li><a href="#" onclick="openCity(event, 'personal')">Listado de personal</a></li>
-                                        <li><a href="#" onclick="openCity(event, 'cargo')">Cargos</a></li>
                                     </ul>
                                 </li>
                                 <li class="navigation-header"><span>Appearance</span> <i class="icon-menu" title="" data-original-title="Appearance"></i></li>
@@ -155,7 +161,7 @@
             <div class="content">
                 <div class="panel panel-flat content-group-lg" style="position: static; zoom: 1;">
                     <div class="panel-heading">
-                        <h5 class="panel-title">Ingreso de sistemas<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+                        <h5 class="panel-title">Modulos de asisgnacion de Sistemas<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
                         <div class="heading-elements">
                             <ul class="icons-list">
                                 <li>
@@ -180,39 +186,40 @@
                         <div id="sistema" class="tabcontent">
                             <div class="col-lg-12" style="margin-bottom: 20px; margin-top: 20px">
 
-                                <button type="button" class="btn btn-lg btn-primary btn-raised legitRipple" data-toggle="modal" data-target="#newSystem" id="aa">Ingreso de nuevo sistema</button>
+                                <button type="button" class="btn btn-lg btn-primary btn-raised legitRipple" data-toggle="modal" data-target="#newSystem" id="newSistema">Ingreso de nuevo sistema</button>
 
-                                <div id="newSystem" class="modal fade" role="dialog">
+                                <div id="newSystem" class="modal fade" role="dialog" data-id="0">
                                     <div class="modal-dialog">
 
                                         <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Nuevo sistema</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <input id="nom_sistema" type="text" class="form-control input-lg" placeholder="Ingrese Nombre de Sistema">
-                                                    <div class="form-control-feedback">
-                                                        <i class="icon-make-group"></i>
+                                            <form id="form_sistema" class="form-validate-jquery">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Nuevo sistema</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group has-feedback has-feedback-left">
+                                                        <input id="nom_sistema" type="text" class="form-control input-lg requerido" required="required" placeholder="Ingrese Nombre de Sistema" name="nom_sistema">
+                                                        <div class="form-control-feedback">
+                                                            <i class="icon-make-group"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-feedback has-feedback-left">
+                                                        <select class="form-control" id="sel1" name="comboGrupo">
+                                                                                                                
+											        </select>
+                                                    </div>
+                                                    <div class="form-group has-feedback has-feedback-left">
+                                                        <textarea id="descripcion_sistema" rows="5" cols="5" class="form-control requerido" placeholder="Ingrese descripción del sistema" name="descripcion_sistema"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <select class="form-control" id="sel1">
-												<option>Grupo 01</option>
-												<option>Grupo 02</option>
-												<option>Grupo 03</option>
-												<option>Grupo 04</option>
-											</select>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default legitRipple " data-dismiss="modal">Close</button>
+                                                    <button id="save_sistema" type="button" class="btn btn-primary legitRipple" data-dismiss="modal" data-id="0" data-value="-1">
+                                                    <i class="icon-floppy-disk position-left"></i>Save </button>
                                                 </div>
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <textarea id="descripcion_sistema" rows="5" cols="5" class="form-control" placeholder="Ingrese descripción del sistema"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button id="save_sistema" type="button" class="btn btn-default enviar" data-dismiss="modal" data-id="0" data-value="+1">Save</button>
-                                            </div>
+                                                <div id="results"></div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +229,6 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="bg-blue">
-                                            <th>#</th>
                                             <th>ID</th>
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
@@ -240,39 +246,34 @@
                         <div id="grupo" class="tabcontent">
                             <div class="col-lg-12" style="margin-bottom: 20px; margin-top: 20px">
                                 <div>
-                                    <button type="button" class="btn btn-lg btn-primary btn-raised legitRipple" data-toggle="modal" data-target="#newGroup">Ingreso de nuevo grupo</button>
+                                    <button type="button" class="btn btn-lg btn-primary btn-raised legitRipple" data-toggle="modal" data-target="#newGroup" id="newGrupo">Ingreso de nuevo grupo</button>
                                 </div>
                                 <div id="newGroup" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
 
                                         <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Nuevo grupo</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <input id="nomGrupo" type="text" class="form-control input-lg" placeholder="Ingrese Nombre de grupo">
-                                                    <div class="form-control-feedback">
-                                                        <i class="icon-make-group"></i>
+                                            <form id="formgGrupo">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Nuevo grupo</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group has-feedback has-feedback-left">
+                                                        <input id="nomGrupo" type="text" class="form-control input-lg requeridoG" placeholder="Ingrese Nombre de grupo" name="nomGrupo">
+                                                        <div class="form-control-feedback">
+                                                            <i class="icon-make-group"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group has-feedback has-feedback-left">
+                                                        <textarea id="desGrupo" rows="5" cols="5" class="form-control requeridoG" placeholder="Ingrese descripción del sistema" name="desGrupo"></textarea>
                                                     </div>
                                                 </div>
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <select class="form-control" id="sel2">
-												<option>Personal 01</option>
-												<option>Personal 02</option>
-												<option>Personal 03</option>
-												<option>Personal 04</option>
-											</select>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button id="save_grupo" type="button" class="btn btn-primary legitRipple" data-dismiss="modal" data-id="0" data-value="-1">
+                                                    <i class="icon-floppy-disk position-left"></i>Save </button>
                                                 </div>
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <textarea id="desGrupo" rows="5" cols="5" class="form-control" placeholder="Ingrese descripción del sistema"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button onclick="guardarGrupo()" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -282,11 +283,9 @@
                                 <table class="table">
                                     <thead>
                                         <tr class="bg-blue">
-                                            <th>#</th>
                                             <th>ID</th>
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
-                                            <th>Jefe grupo</th>
                                             <th>Cantidad</th>
                                             <th>Opcion</th>
                                         </tr>
@@ -348,24 +347,6 @@
                                     </thead>
                                     <tbody id="tablaModulo">
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div id="observacion" class="tabcontent">
-
-                            <div class="col-lg-12 table-responsive" style="display: block;">
-                                <table class="tablaObservacion">
-                                    <thead>
-                                        <tr class="bg-blue">
-                                            <th>#</th>
-                                            <th>ID</th>
-                                            <th>Observacion</th>
-                                            <th>Modulo</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaObservacion">
-                                        sfasdfafasf
                                     </tbody>
                                 </table>
                             </div>
@@ -445,53 +426,6 @@
                                 </table>
                             </div>
                         </div>
-                        <div id="cargo" class="tabcontent">
-                            <div class="col-lg-12" style="margin-bottom: 20px; margin-top: 20px">
-                                <div>
-                                    <button type="button" class="btn btn-lg btn-primary btn-raised legitRipple" data-toggle="modal" data-target="#newPersonal">Ingreso de nuevo personal</button>
-                                </div>
-                                <div id="newPersonal" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
-
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Nuevo personal</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group has-feedback has-feedback-left">
-                                                    <input id="nomPersonal" type="text" class="form-control input-lg" placeholder="Nombre completo">
-                                                    <div class="form-control-feedback">
-                                                        <i class="icon-make-group"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button onclick="guardarPersonal()" type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-12 table-responsive" style="display: block;">
-                                <table class="table">
-                                    <thead>
-                                        <tr class="bg-blue">
-                                            <th>#</th>
-                                            <th>ID</th>
-                                            <th>Cargo</th>
-                                            <th>Descripcion</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaPersonal">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -499,6 +433,8 @@
     </div>
 
     <script type="text/javascript" src="static/src/js/require.js" data-main="static/build/js/mantenimientoView.js"></script>
+
+
     <script>
         function openCity(evt, cityName) {
             var i, tabcontent, tablinks;
