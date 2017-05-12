@@ -4,13 +4,26 @@ import { MantenimientoSistemaService } from './mantenimiento.service';
 import { modulo_sistema } from './mantenimientoView';
 import * as utils from './utils';
 
+declare var $: any;
 export class modulo_grupo {
 
     private mantenimientoGrupo_services = new MantenimientoGrupoService();
     private mantenimientoSistemas_services = new MantenimientoSistemaService();
 
+    private localJsonRules: Object = {
+        nomGrupo: {
+            maxlength: 10
+        },
+        desGrupo: {
+            maxlength: 40
+        },
+    };
+
+    private form_grupo_validate: any;
+
     constructor() {
         // new modulo_sistema();
+        this.form_grupo_validate = $('#formgGrupo').validate(utils.validateForm(this.localJsonRules));
 
         this.getobtenerGrupo();
 
@@ -18,14 +31,13 @@ export class modulo_grupo {
 
         $('#save_grupo').on('click', () => {
             let value = parseInt($('#save_grupo').attr("data-value"))
-            let nombre = $("#nomGrupo").val()
-            let descripcion = $("#desGrupo").val()
             let auxGyE = $(".botonEditarGrupo").attr('data-id')
-            let x = $("#formGrupo").serializeArray();
+            let serialArray = $("#formGrupo").serializeArray();
+            let objeto = utils.formToObject(utils.serializeForm('formGrupo'));
             let error = 0
             if (auxGyE == null) { auxGyE = "0" }
             $("#save_grupo").attr("data-dismiss", "-1");
-            $.each(x, function (i, field) {
+            $.each(serialArray, function (i: any, field: any) {
                 if (field.value == "") {
                     $('.requeridoG').addClass("alertaDatos");
                     error = 1
@@ -35,15 +47,13 @@ export class modulo_grupo {
             if (error == 0) {
                 $("#save_grupo").attr("data-dismiss", "modal");
                 utils.alert_confirmG(() => {
-                    this.setguardarGrupo(auxGyE, value, nombre, descripcion);
+                    this.setguardarGrupo(auxGyE, value, objeto.nomGrupo, objeto.desGrupo);
                 });
                 $('.requeridoG').removeClass("alertaDatos");
             }
-
-
         });
 
-        $('.table').on('click', '.eliminarGrupo', (ev) => {
+        $('.table').on('click', '.eliminarGrupo', (ev: JQueryEventObject) => {
             let aux = ev.currentTarget
             let value = $(aux).data("value")
             utils.alert_confirmE(() => {
@@ -51,13 +61,13 @@ export class modulo_grupo {
             });
         });
 
-        $('#grupo').on('click', '#newSistema', (ev) => {
+        $('#grupo').on('click', '#newSistema', (ev: JQueryEventObject) => {
             $(".botonEditarGrupo").attr('data-id', 0)
             $("#nomGrupo").val("")
             $("#desGrupo").val("")
         });
 
-        $('.table').on('click', '.botonEditarGrupo', (ev) => {
+        $('.table').on('click', '.botonEditarGrupo', (ev: JQueryEventObject) => {
             let aux = ev.currentTarget
             let value = $(aux).data("value")
             $('#save_grupo').attr('data-value', value)
@@ -65,7 +75,7 @@ export class modulo_grupo {
             this.geteditarSistemas(value)
         });
 
-        $('#grupo').on('click', '#newGrupo', (ev) => {
+        $('#grupo').on('click', '#newGrupo', (ev: JQueryEventObject) => {
             $(".botonEditarGrupo").attr('data-id', 0)
             $("#nomGrupo").val("")
             $("#desGrupo").val("")
@@ -114,7 +124,7 @@ export class modulo_grupo {
     getDataCombo() {
         this.mantenimientoGrupo_services.getGrupo().done((data) => {
             let aux = "";
-            aux = `<option value="" class="requerido"></option>`
+            aux = `<option value="" class="requerido">Selecione</option>`
             for (let entry of data) {
                 aux += `<option value="${entry.id}" label="${entry.nombre}"></option>`
             }

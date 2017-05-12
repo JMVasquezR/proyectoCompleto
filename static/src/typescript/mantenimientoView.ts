@@ -9,28 +9,29 @@ export class modulo_sistema {
 
     private mantenimientosistemaService = new MantenimientoSistemaService();
     private mantenimientogrupoService = new MantenimientoGrupoService();
-    private auxGrupo: any = {};
 
     private localJsonRules: Object = {
-  
         nom_sistema: {
-            maxlength: 4
+            maxlength: 20
+        },
+        descripcion_sistema: {
+            maxlength: 40
+        },
+        sel1: {
+            maxlength: 1
         }
     };
 
-private form_local_validate: any;
+    private form_sistema_validate: any;
 
     constructor() {
         // new modulo_grupo()
-        this.form_local_validate = $('#form_sistema').validate(utils.validateForm(this.localJsonRules));
-        console.log(this.form_local_validate)
+        this.form_sistema_validate = $('#form_sistema').validate(utils.validateForm(this.localJsonRules));
+        let a = this.form_sistema_validate.valid();
         new modulo_grupo();
 
         this.getobtenerSistemas();
 
-       
-
-        /*Modulo sistemas*/
         $('.table').on('click', '.botonEditarSistema', (ev: JQueryEventObject) => {
             let aux = ev.currentTarget
             let value = $(aux).data("value")
@@ -49,32 +50,27 @@ private form_local_validate: any;
 
         $('#save_sistema').on('click', () => {
             let value = parseInt($('#save_sistema').attr("data-value"))
-            let nombre = $("#nom_sistema").val()
-            let descripcion = $("#descripcion_sistema").val()
             let auxGyE = $(".botonEditarSistema").attr('data-id')
-            let grupo = $('#sel1 option:selected').val();
-            let x = $("#form_sistema").serializeArray();
+            let serialArray = $("#form_sistema").serializeArray();
             let error = 0
+            let objeto = utils.formToObject(utils.serializeForm('form_sistema'));
+            debugger
             if (auxGyE == null) { auxGyE = "0" }
             $("#save_sistema").attr("data-dismiss", "-1");
-             
-             
-
-            /*$.each(x, function (i: any, field: any) {
+            $.each(objeto, function (i: any, field: any) {
                 if (field.value == "") {
                     $('.requerido').addClass("alertaDatos");
                     error = 1
                 }
-                else { console.log(field.value) }
+                else { }
             });
-            console.log(error)
             if (error == 0) {
                 $("#save_sistema").attr("data-dismiss", "modal");
                 utils.alert_confirmG(() => {
-                    this.setguardarSistemas(auxGyE, value, nombre, descripcion, grupo);
+                    this.setguardarSistemas(auxGyE, value, objeto.nom_sistema, objeto.descripcion_sistema, objeto.sel1, objeto.check_activo);
                 });
                 $('.requerido').removeClass("alertaDatos");
-            }*/
+            }
         });
 
         $('#sistema').on('click', '#newSistema', (ev: JQueryEventObject) => {
@@ -82,6 +78,9 @@ private form_local_validate: any;
             $("#nom_sistema").val("")
             $("#descripcion_sistema").val("")
             $("#sel1 ").val("-1");
+            $("#nom_sistema-error").css("display", "none");
+            $("#descripcion_sistema-error").css("display", "none");
+            $("#sel1-error").css("display", "none");
             new modulo_grupo();
         });
     }
@@ -89,36 +88,31 @@ private form_local_validate: any;
     /*Modulo sistemas*/
     getobtenerSistemas() {
         this.mantenimientosistemaService.getSistemas().done((dataS) => {
-            let aux1, aux3, auxT = "";
-            let aux2 = "";
-            this.getobtenerGrupo()
+            let auxT = "";
             this.mantenimientogrupoService.getGrupo().done((dataG) => {
                 for (let entryS of dataS) {
-                    aux1 = `<tr><td>${entryS.id}</td><td>${entryS.nombre}</td><td>${entryS.descripcion}</td><td>`
+                    auxT += `<tr><td>${entryS.id}</td><td>${entryS.nombre}</td><td>${entryS.descripcion}</td><td>`
                     for (let entryG of dataG) {
                         if (entryS.grupo == entryG.id) {
-                            aux2 = `${entryG.nombre}`
+                            auxT += `${entryG.nombre}</td><td>`
                         }
                     }
-                    aux3 = `</td><td><ul class="icons-list"><li class="text-primary-600" data-toggle="modal" data-target="#newSystem"><a class="botonEditarSistema" 
+                    if (entryS.estado) { auxT += `Activo` } else { auxT += `Desactivado` }
+                    auxT += `</td><td><ul class="icons-list"><li class="text-primary-600" data-toggle="modal" data-target="#newSystem"><a class="botonEditarSistema" 
                 name="sit" data-value="${entryS.id}" data-id="1" data-select="${entryS.grupo}"><i  class="icon-pencil7" ></i></a></li><li class="text-danger-600"><a data-value="${entryS.id}" class="eliminarSistema">
                 <i class="icon-trash"></i></a></li><li class="text-teal-600"><a><i class="icon-cog7"></i></a></li></ul></td></tr>`;
-                    auxT += aux1 + aux2 + aux3
                 }
                 $("#tablaSistema").html(auxT);
             })
         })
     }
 
-    setguardarSistemas(tipo: string, value: number, nombre: string, descripcion: string, grupo: string) {
+    setguardarSistemas(tipo: string, value: number, nombre: string, descripcion: string, grupo: string, activo: number) {
         let select_grupo = $("#sel1 option:selected").val();
         let data = {
-            id: value,
             nombre: nombre,
             descripcion: descripcion,
-            sigla: '',
-            fecha_inicio: '',
-            fecha_fin: '',
+            estado: activo,
             grupo: grupo
         }
         if (tipo == "0") {
@@ -129,7 +123,7 @@ private form_local_validate: any;
                 utils.showSwalAlert('El sistema no se pudo guardar!', 'Error', 'success');
             });
         } else {
-            this.mantenimientosistemaService.editSistema(data.id, data).done((resaponse) => {
+            this.mantenimientosistemaService.editSistema(value, data).done((resaponse) => {
                 utils.showSwalAlert('El sistema fue editado!', 'Editado', 'success');
                 this.getobtenerSistemas();
             }).fail((response) => {
@@ -157,12 +151,6 @@ private form_local_validate: any;
             this.getobtenerSistemas();
         }).fail((response) => {
             utils.showSwalAlert('El sistema no se pudo eliminar!', 'Error', 'success');
-        })
-    }
-
-    getobtenerGrupo() {
-        this.mantenimientogrupoService.getGrupo().done((data) => {
-            this.auxGrupo = data
         })
     }
 }

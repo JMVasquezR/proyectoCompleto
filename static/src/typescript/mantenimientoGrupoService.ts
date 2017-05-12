@@ -2,7 +2,7 @@ declare var BASEURL : string;
 
 export class MantenimientoGrupoService{
 
-    private url_mantenimientogrupoService : string ='http://172.16.2.205:82/apirest/grupo/';
+    private url_mantenimientogrupoService : string ='http://172.16.2.205:8000/apirest/grupo/';
 
     getGrupo(): JQueryXHR{
         return $.ajax({
